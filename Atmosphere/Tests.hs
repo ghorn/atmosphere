@@ -15,7 +15,7 @@ run = do
   putStrLn $ "usAtmosphere = US table:         " ++ show (checkUSTable < (1e-2 :: Double))
 
 simpleAtmosVsAtmos :: (Floating a, Ord a, Enum a) => a
-simpleAtmosVsAtmos = maximum $ [maxErr alt | alt <- [0,0.01..19.99]]
+simpleAtmosVsAtmos = maximum [maxErr alt | alt <- [0,0.01..19.99]]
   where
     maxErr x = maximum  (map abs [e0,e1,e2])
       where
@@ -54,7 +54,7 @@ simpleAtmosVsAtmos = maximum $ [maxErr alt | alt <- [0,0.01..19.99]]
         sigma = delta/theta
  
 checkSITable :: (Floating a, Ord a) => a
-checkSITable = maximum $ map (\x -> maximum $ map abs (siTabErr x)) siTable
+checkSITable = maximum $ map (maximum . map abs . siTabErr) siTable
   where
     siTabErr (alt, sigma, delta, theta, temp, press, dens, a, visc, kVisc) = ret
       where
@@ -74,7 +74,7 @@ checkSITable = maximum $ map (\x -> maximum $ map abs (siTabErr x)) siTable
                          ]
 
 checkUSTable :: (Floating a, Ord a) => a
-checkUSTable = maximum $ map (\x -> maximum $ map abs (usTabErr x)) usTable
+checkUSTable = maximum $ map (maximum . map abs . usTabErr) usTable
   where
     usTabErr (alt_kft, sigma, delta, theta, temp, press, dens, a, visc, kVisc) = ret
       where

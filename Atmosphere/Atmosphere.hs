@@ -10,12 +10,12 @@ module Atmosphere.Atmosphere( Atmos(..)
 
 import Atmosphere.Constants
 
-data Atmos a = Atmos { atmos'Temperature :: a
-                     , atmos'Pressure :: a
-                     , atmos'Density :: a
-                     , atmos'SpeedOfSound :: a
-                     , atmos'Viscosity :: a
-                     , atmos'KinematicViscosity :: a
+data Atmos a = Atmos { atmosTemperature :: a
+                     , atmosPressure :: a
+                     , atmosDensity :: a
+                     , atmosSpeedOfSound :: a
+                     , atmosViscosity :: a
+                     , atmosKinematicViscosity :: a
                      }
 
 {- |
@@ -39,7 +39,7 @@ siAtmosphere alt_m = (temp, pressure, density, asound, viscosity, kinematicVisco
     temp = _TZERO * theta
     pressure = _PZERO * delta
     density = _RHOZERO * sigma
-    asound = _AZERO * sqrt(theta)
+    asound = _AZERO * sqrt theta
     viscosity = metricViscosity theta
     kinematicViscosity = viscosity/density
 
@@ -64,8 +64,8 @@ usAtmosphere alt_ft = (temp, pressure, density, asound, viscosity, kinematicVisc
     temp = _KELVIN2RANKINE*_TZERO*theta
     pressure = _PZERO*delta/47.88
     density = _RHOZERO*sigma/515.379
-    asound = (_AZERO/_FT2METERS)*sqrt(theta)
-    viscosity=(1.0/_PSF2NSM)*metricViscosity(theta)
+    asound = (_AZERO/_FT2METERS)*sqrt theta
+    viscosity=(1.0/_PSF2NSM)*metricViscosity theta
     kinematicViscosity = viscosity/density
 
 metricViscosity :: (Floating a, Ord a) => a -> a

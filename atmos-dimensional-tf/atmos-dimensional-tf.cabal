@@ -14,7 +14,7 @@ build-type:          Simple
 cabal-version:       >=1.8
 
 library
-   exposed-modules: Atmosphere.AtmosphereDimensionalTF
+   exposed-modules: Atmosphere.Dimensional.TF
   -- other-modules:       
    build-depends:   base >= 4 && < 5,
                     atmos >= 0.1 && < 0.2,

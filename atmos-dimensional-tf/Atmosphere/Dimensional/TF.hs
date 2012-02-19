@@ -1,15 +1,15 @@
 {-# OPTIONS_GHC -Wall #-}
 
-module Atmosphere.AtmosphereDimensional( atmosphere
-                                       , atmosphere'
-                                       , Atmos(..)
-                                       ) where
+module Atmosphere.Dimensional.TF( atmosphere
+                                , atmosphere'
+                                , Atmos(..)
+                                ) where
 
 import Atmosphere hiding (Atmos(..))
 
 import qualified Prelude
-import Numeric.Units.Dimensional.Prelude
-import Numeric.NumType(Zero, Pos2, Neg1)
+import Numeric.Units.Dimensional.TF.Prelude
+import Numeric.NumType.TF(Zero, Pos2, Neg1)
 
 type DKinematicViscosity = Dim Pos2 Zero Neg1 Zero Zero Zero Zero
 type KinematicViscosity = Quantity DKinematicViscosity

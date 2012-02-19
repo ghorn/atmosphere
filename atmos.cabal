@@ -1,4 +1,4 @@
-name:                atmosphere
+name:                atmos
 version:             0.1.0.0
 synopsis:            1976 US Standard Atmosphere
 description: {
@@ -26,3 +26,7 @@ library
 
   -- other-modules:       
    build-depends:       base >= 4 && < 5
+
+source-repository head
+  type:     git
+  location: git://github.com/ghorn/atmos.git

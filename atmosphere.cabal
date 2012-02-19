@@ -1,0 +1,28 @@
+name:                atmosphere
+version:             0.1.0.0
+synopsis:            1976 US Standard Atmosphere
+description: {
+1976 US Standard Atmosphere
+.
+Adapted by Greg Horn from original programs by Ralph L. Carmichael, Public Domain Aeronautical Software
+.
+The original code can be found at <http://www.pdas.com/atmos.html>
+.
+The useful functions are in Atmosphere.Atmosphere.
+}
+license:             PublicDomain
+author:              Greg Horn
+maintainer:          gregmainland@gmail.com
+-- copyright:           
+category:            Science
+build-type:          Simple
+cabal-version:       >=1.8
+
+library
+   exposed-modules:     Atmosphere
+                        Atmosphere.Atmosphere
+                        Atmosphere.Constants
+                        Atmosphere.Tests
+
+  -- other-modules:       
+   build-depends:       base >= 4 && < 5

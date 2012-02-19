@@ -5,7 +5,6 @@ module Atmosphere( siAtmosphere
                  , Atmos(..)
                  , siAtmosphere'
                  , usAtmosphere'
-                 , atmosphere
                  ) where
 
 import Atmosphere.Atmosphere

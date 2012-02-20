@@ -7,8 +7,6 @@ description: {
 Adapted by Greg Horn from original programs by Ralph L. Carmichael, Public Domain Aeronautical Software
 .
 The original code can be found at <http://www.pdas.com/atmos.html>
-.
-The useful functions are in Atmosphere.Atmosphere.
 }
 license:             PublicDomain
 author:              Greg Horn
@@ -20,11 +18,10 @@ cabal-version:       >=1.8
 
 library
    exposed-modules:     Atmosphere
-                        Atmosphere.Atmosphere
+   other-modules:       Atmosphere.Atmosphere
                         Atmosphere.Constants
                         Atmosphere.Tests
 
-  -- other-modules:       
    build-depends:       base >= 4 && < 5
 
 source-repository head

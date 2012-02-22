@@ -9,10 +9,6 @@ import Atmosphere hiding (Atmos(..))
 
 import qualified Prelude
 import Numeric.Units.Dimensional.TF.Prelude
-import Numeric.NumType.TF(Zero, Pos2, Neg1)
-
-type DKinematicViscosity = Dim Pos2 Zero Neg1 Zero Zero Zero Zero
-type KinematicViscosity = Quantity DKinematicViscosity
 
 data Atmos a = Atmos { atmosTemperature :: ThermodynamicTemperature a
                      , atmosPressure :: Pressure a
@@ -28,10 +24,10 @@ atmosphere :: (Floating a, Ord a) =>
                DynamicViscosity a, KinematicViscosity a)
 atmosphere alt = ( temp *~ kelvin
                  , pressure *~ pascal
-                 , density *~ (kilo gram / (meter*meter*meter))
+                 , density *~ (kilo gram / meter ^ pos3)
                  , asound *~ (meter / second)
-                 , viscosity *~ (newton * second / (meter*meter))
-                 , kinematicViscosity *~ (meter*meter/second)
+                 , viscosity *~ (newton * second / meter ^ pos2)
+                 , kinematicViscosity *~ (meter ^ pos2 / second)
                  )
   where
     (temp, pressure, density, asound, viscosity, kinematicViscosity) = siAtmosphere (alt /~ meter)

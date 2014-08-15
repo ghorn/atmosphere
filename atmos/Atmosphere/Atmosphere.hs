@@ -6,9 +6,11 @@ module Atmosphere.Atmosphere( Atmos(..)
                             , siAtmosphere'
                             , usAtmosphere'
                             , atmosphere
+                            , siAltitudeFromPressure
                             ) where
 
 import Atmosphere.Constants
+import Atmosphere.Math
 
 data Atmos a = Atmos { atmosTemperature :: a
                      , atmosPressure :: a
@@ -126,3 +128,14 @@ atmosphere alt = (sigma, delta, theta)
       | otherwise     = ptabI*(tbase/tlocal)**(_GMR/tgradI)
     sigma = delta/theta
 
+{- |
+   Compute altitude at which the standard atmosphere has a certain pressure.
+
+   Input: Pressure, N/m^2
+   Negative input pressures are invalid.
+   Input pressures greater than that at 
+
+   Output: Altitude in meters
+-}
+siAltitudeFromPressure :: (Floating a, Ord a) => a -> a
+siAltitudeFromPressure pressure = bisection 0.01 ((subtract pressure) . atmosPressure . siAtmosphere') (-1e3) (1e5)

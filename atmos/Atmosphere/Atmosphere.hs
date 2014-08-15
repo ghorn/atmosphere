@@ -132,8 +132,6 @@ atmosphere alt = (sigma, delta, theta)
    Compute altitude at which the standard atmosphere has a certain pressure.
 
    Input: Pressure, N/m^2
-   Negative input pressures are invalid.
-   Input pressures greater than that at 
 
    Output: Altitude in meters
 -}

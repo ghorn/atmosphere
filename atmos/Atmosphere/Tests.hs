@@ -10,9 +10,10 @@ import Atmosphere.Atmosphere
 
 run :: IO ()
 run = do
-  putStrLn $ "simple atmosphere == atmosphere: " ++ show (simpleAtmosVsAtmos < (1e-14 :: Double))
-  putStrLn $ "siAtmosphere = SI table:         " ++ show (checkSITable < (1e-2 :: Double))
-  putStrLn $ "usAtmosphere = US table:         " ++ show (checkUSTable < (1e-2 :: Double))
+  putStrLn $ "simple atmosphere == atmosphere:   " ++ show (simpleAtmosVsAtmos < (1e-14 :: Double))
+  putStrLn $ "siAtmosphere = SI table:           " ++ show (checkSITable < (1e-2 :: Double))
+  putStrLn $ "usAtmosphere = US table:           " ++ show (checkUSTable < (1e-2 :: Double))
+  putStrLn $ "siAltitudeFromPressure = SI table: " ++ show (checkSITableInversePressure < (5e-3:: Double)) -- 5 m absolute
 
 simpleAtmosVsAtmos :: (Floating a, Ord a, Enum a) => a
 simpleAtmosVsAtmos = maximum [maxErr alt | alt <- [0,0.01..19.99]]
@@ -72,6 +73,13 @@ checkSITable = maximum $ map (maximum . map abs . siTabErr) siTable
                          , (1e-6*visc, visc')
                          , (kVisc, kVisc')
                          ]
+
+checkSITableInversePressure :: (Floating a, Ord a) => a
+checkSITableInversePressure = maximum $ map siTabErr siTable
+  where
+    siTabErr (alt, _, _, _, _, press, _, _, _, _) = abs (alt - alt')
+      where
+        alt' = (siAltitudeFromPressure press) / 1000
 
 checkUSTable :: (Floating a, Ord a) => a
 checkUSTable = maximum $ map (maximum . map abs . usTabErr) usTable

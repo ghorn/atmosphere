@@ -138,4 +138,4 @@ atmosphere alt = (sigma, delta, theta)
    Output: Altitude in meters
 -}
 siAltitudeFromPressure :: (Floating a, Ord a) => a -> a
-siAltitudeFromPressure pressure = bisection 0.01 ((subtract pressure) . atmosPressure . siAtmosphere') (-1e3) (1e5)
+siAltitudeFromPressure pressure = bisection 1e-3 ((subtract pressure) . atmosPressure . siAtmosphere') (-1e4) (1e5)

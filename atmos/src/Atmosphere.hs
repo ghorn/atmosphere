@@ -4,8 +4,6 @@ module Atmosphere
        ( Atmos(..)
        , siAtmosphere
        , usAtmosphere
-       , siAtmosphere'
-       , usAtmosphere'
        , atmosphere
        , siAltitudeFromPressure
        ) where
@@ -34,8 +32,15 @@ data Atmos a = Atmos { atmosTemperature :: a
    > viscosity           - N-s/m^2
    > kinematic viscosity - m^2/s
 -}
-siAtmosphere :: (Floating a, Ord a) => a -> (a,a,a,a,a,a)
-siAtmosphere alt_m = (temp, pressure, density, asound, viscosity, kinematicViscosity)
+siAtmosphere :: (Floating a, Ord a) => a -> Atmos a
+siAtmosphere alt_m =
+  Atmos { atmosTemperature = temp
+        , atmosPressure = pressure
+        , atmosDensity = density
+        , atmosSpeedOfSound = asound
+        , atmosViscosity = viscosity
+        , atmosKinematicViscosity = kinematicViscosity
+        }
   where
     alt_km = 0.001*alt_m
     (sigma, delta, theta) = atmosphere alt_km
@@ -59,8 +64,15 @@ siAtmosphere alt_m = (temp, pressure, density, asound, viscosity, kinematicVisco
    > viscosity           - slugs/(ft-s)
    > kinematic viscosity - ft^2/s
 -}
-usAtmosphere :: (Floating a, Ord a) => a -> (a,a,a,a,a,a)
-usAtmosphere alt_ft = (temp, pressure, density, asound, viscosity, kinematicViscosity)
+usAtmosphere :: (Floating a, Ord a) => a -> Atmos a
+usAtmosphere alt_ft =
+  Atmos { atmosTemperature = temp
+        , atmosPressure = pressure
+        , atmosDensity = density
+        , atmosSpeedOfSound = asound
+        , atmosViscosity = viscosity
+        , atmosKinematicViscosity = kinematicViscosity
+        }
   where
     alt_km = 0.001*_FT2METERS*alt_ft
     (sigma, delta, theta) = atmosphere alt_km
@@ -75,20 +87,6 @@ metricViscosity :: (Floating a, Ord a) => a -> a
 metricViscosity theta = _BETAVISC*sqrt(t*t*t)/(t+_SUTH)
   where
     t = theta * _TZERO
-
--- | atmosphere in SI units with ADT output
-siAtmosphere' :: (Floating a, Ord a) => a -> Atmos a
-siAtmosphere' alt = Atmos temp pressure density asound viscosity kinematicViscosity
-  where
-    (temp, pressure, density, asound, viscosity, kinematicViscosity) = siAtmosphere alt
-
-
--- | atmosphere in imperial units with ADT output
-usAtmosphere' :: (Floating a, Ord a) => a -> Atmos a
-usAtmosphere' alt = Atmos temp pressure density asound viscosity kinematicViscosity
-  where
-    (temp, pressure, density, asound, viscosity, kinematicViscosity) = usAtmosphere alt
-
 
 {- |
    Compute temperature, density, and pressure in standard atmosphere.
@@ -137,4 +135,4 @@ atmosphere alt = (sigma, delta, theta)
    Output: Altitude in meters
 -}
 siAltitudeFromPressure :: (Floating a, Ord a) => a -> a
-siAltitudeFromPressure pressure = bisection 1e-3 ((subtract pressure) . atmosPressure . siAtmosphere') (-1e4) (1e5)
+siAltitudeFromPressure pressure = bisection 1e-3 ((subtract pressure) . atmosPressure . siAtmosphere) (-1e4) (1e5)

@@ -65,7 +65,7 @@ checkSITable = maximum $ map (maximum . map abs . siTabErr) siTable
     siTabErr (alt, sigma, delta, theta, temp, press, dens, a, visc, kVisc) = ret
       where
         (sigma', delta', theta') = atmosphere alt
-        (temp', press', dens', a', visc', kVisc') = siAtmosphere (1000*alt)
+        Atmos temp' press' dens' a' visc' kVisc' = siAtmosphere (1000*alt)
 
         relErr (x,y) = (x - y)/x
         ret = map relErr [ (sigma,  sigma')
@@ -92,7 +92,7 @@ checkUSTable = maximum $ map (maximum . map abs . usTabErr) usTable
     usTabErr (alt_kft, sigma, delta, theta, temp, press, dens, a, visc, kVisc) = ret
       where
         (sigma', delta', theta') = atmosphere (alt_kft/3.2808399)
-        (temp', press', dens', a', visc', kVisc') = usAtmosphere (1000*alt_kft)
+        Atmos temp' press' dens' a' visc' kVisc' = usAtmosphere (1000*alt_kft)
 
         relErr (x,y) = (x - y)/x
         ret = map relErr [ (sigma,  sigma')

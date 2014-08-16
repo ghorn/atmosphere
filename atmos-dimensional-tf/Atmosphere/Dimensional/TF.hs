@@ -1,8 +1,7 @@
 {-# OPTIONS_GHC -Wall #-}
 
-module Atmosphere.Dimensional.TF( atmosphere
-                                , atmosphere'
-                                , Atmos(..)
+module Atmosphere.Dimensional.TF( Atmos(..)
+                                , atmosphere
                                 ) where
 
 import qualified Atmosphere as A
@@ -18,22 +17,14 @@ data Atmos a = Atmos { atmosTemperature :: ThermodynamicTemperature a
                      , atmosKinematicViscosity :: KinematicViscosity a
                      }
 
-atmosphere :: (Floating a, Ord a) =>
-              Length a ->
-              (ThermodynamicTemperature a, Pressure a, Density a, Velocity a,
-               DynamicViscosity a, KinematicViscosity a)
-atmosphere alt = ( temp *~ kelvin
-                 , pressure *~ pascal
-                 , density *~ (kilo gram / meter ^ pos3)
-                 , asound *~ (meter / second)
-                 , viscosity *~ (newton * second / meter ^ pos2)
-                 , kinematicViscosity *~ (meter ^ pos2 / second)
-                 )
+atmosphere :: (Floating a, Ord a) => Length a -> Atmos a
+atmosphere alt = Atmos
+                 { atmosTemperature        = temp *~ kelvin
+                 , atmosPressure           = pressure *~ pascal
+                 , atmosDensity            = density *~ (kilo gram / meter ^ pos3)
+                 , atmosSpeedOfSound       = asound *~ (meter / second)
+                 , atmosViscosity          = viscosity *~ (newton * second / meter ^ pos2)
+                 , atmosKinematicViscosity = kinematicViscosity *~ (meter ^ pos2 / second)
+                 }
   where
-    (temp, pressure, density, asound, viscosity, kinematicViscosity) = A.siAtmosphere (alt /~ meter)
-
-
-atmosphere' :: (Floating a, Ord a) => Length a -> Atmos a
-atmosphere' alt = Atmos temp pressure density asound visc kVisc
-  where
-    (temp, pressure, density, asound, visc, kVisc) = atmosphere alt
+    A.Atmos temp pressure density asound viscosity kinematicViscosity = A.siAtmosphere (alt /~ meter)

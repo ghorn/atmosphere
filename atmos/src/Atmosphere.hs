@@ -9,7 +9,6 @@ module Atmosphere
        ) where
 
 import Atmosphere.Constants
-import Atmosphere.Math
 
 data Atmos a = Atmos { atmosTemperature :: a
                      , atmosPressure :: a

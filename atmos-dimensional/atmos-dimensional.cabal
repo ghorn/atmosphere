@@ -1,5 +1,5 @@
 name:                atmos-dimensional
-version:             0.1.1
+version:             0.1.2
 synopsis:            dimensional wrapper on atmos package
 description: {
 1976 US Standard Atmosphere with dimensions from dimensional package.

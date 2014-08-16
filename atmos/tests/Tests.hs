@@ -1,19 +1,24 @@
 {-# OPTIONS_GHC -Wall #-}
 
-module Atmosphere.Tests( run
-                       , simpleAtmosVsAtmos
-                       , checkSITable
-                       , checkUSTable
-                       ) where
+module Main ( main ) where
 
-import Atmosphere.Atmosphere
+import Test.Framework ( Test, defaultMain )
+import Test.Framework.Providers.HUnit ( testCase )
+import Test.HUnit ( assertBool )
 
-run :: IO ()
-run = do
-  putStrLn $ "simple atmosphere == atmosphere:   " ++ show (simpleAtmosVsAtmos < (1e-14 :: Double))
-  putStrLn $ "siAtmosphere = SI table:           " ++ show (checkSITable < (1e-2 :: Double))
-  putStrLn $ "usAtmosphere = US table:           " ++ show (checkUSTable < (1e-2 :: Double))
-  putStrLn $ "siAltitudeFromPressure = SI table: " ++ show (checkSITableInversePressure < (5e-3:: Double)) -- 5 m absolute
+import Atmosphere
+
+main :: IO ()
+main =
+  defaultMain
+  [ assertBool' "simple atmosphere == atmosphere:   " (simpleAtmosVsAtmos < (1e-14 :: Double))
+  , assertBool' "siAtmosphere = SI table:           " (checkSITable < (1e-2 :: Double))
+  , assertBool' "usAtmosphere = US table:           " (checkUSTable < (1e-2 :: Double))
+  , assertBool' "siAltitudeFromPressure = SI table: " (checkSITableInversePressure < (5e-3:: Double)) -- 5 m absolute
+  ]
+
+assertBool' :: String -> Bool -> Test
+assertBool' name bool = testCase name (assertBool name bool)
 
 simpleAtmosVsAtmos :: (Floating a, Ord a, Enum a) => a
 simpleAtmosVsAtmos = maximum [maxErr alt | alt <- [0,0.01..19.99]]
@@ -25,14 +30,14 @@ simpleAtmosVsAtmos = maximum [maxErr alt | alt <- [0,0.01..19.99]]
       where
         (s0,d0,t0) = atmosphere x
         (s1,d1,t1) = simpleAtmosphere x
-        
+
     simpleAtmosphere alt = (sigma, delta, theta)
     {-
     Compute temperature, density, and pressure in simplified
     standard atmosphere.
-    
+
     Correct to 20 km.  Only approximate thereafter.
-    
+
     Input:
         alt	geometric altitude, km.
     Return: (sigma, delta, theta)
@@ -43,9 +48,9 @@ simpleAtmosVsAtmos = maximum [maxErr alt | alt <- [0,0.01..19.99]]
       where
         _REARTH = 6369.0             -- radius of the Earth (km)
         _GMR = 34.163195             -- gas constant
-    
+
         h = alt*_REARTH/(alt+_REARTH) -- geometric to geopotential altitude
-    
+
         (theta, delta)
           -- troposphere
           | h < 11.0 = ( (288.15 - 6.5*h)/288.15, theta**(_GMR/6.5) )
@@ -53,7 +58,7 @@ simpleAtmosVsAtmos = maximum [maxErr alt | alt <- [0,0.01..19.99]]
           | h < 20.0 = (216.65/288.15, 0.2233611*exp(-_GMR*(h-11.0)/216.65))
           | otherwise = error "simpleAtmosphere invalid higher than 20 km"
         sigma = delta/theta
- 
+
 checkSITable :: (Floating a, Ord a) => a
 checkSITable = maximum $ map (maximum . map abs . siTabErr) siTable
   where
@@ -61,7 +66,7 @@ checkSITable = maximum $ map (maximum . map abs . siTabErr) siTable
       where
         (sigma', delta', theta') = atmosphere alt
         (temp', press', dens', a', visc', kVisc') = siAtmosphere (1000*alt)
-        
+
         relErr (x,y) = (x - y)/x
         ret = map relErr [ (sigma,  sigma')
                          , (delta, delta')
@@ -88,7 +93,7 @@ checkUSTable = maximum $ map (maximum . map abs . usTabErr) usTable
       where
         (sigma', delta', theta') = atmosphere (alt_kft/3.2808399)
         (temp', press', dens', a', visc', kVisc') = usAtmosphere (1000*alt_kft)
-        
+
         relErr (x,y) = (x - y)/x
         ret = map relErr [ (sigma,  sigma')
                          , (delta, delta')

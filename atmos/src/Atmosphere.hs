@@ -6,6 +6,7 @@ module Atmosphere( siAtmosphere
                  , siAtmosphere'
                  , usAtmosphere'
                  , siAltitudeFromPressure
+                 , atmosphere
                  ) where
 
 import Atmosphere.Atmosphere

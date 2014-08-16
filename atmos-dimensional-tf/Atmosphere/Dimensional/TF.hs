@@ -5,9 +5,9 @@ module Atmosphere.Dimensional.TF( atmosphere
                                 , Atmos(..)
                                 ) where
 
-import Atmosphere hiding (Atmos(..))
+import qualified Atmosphere as A
 
-import qualified Prelude
+import qualified Prelude ()
 import Numeric.Units.Dimensional.TF.Prelude
 
 data Atmos a = Atmos { atmosTemperature :: ThermodynamicTemperature a
@@ -30,7 +30,7 @@ atmosphere alt = ( temp *~ kelvin
                  , kinematicViscosity *~ (meter ^ pos2 / second)
                  )
   where
-    (temp, pressure, density, asound, viscosity, kinematicViscosity) = siAtmosphere (alt /~ meter)
+    (temp, pressure, density, asound, viscosity, kinematicViscosity) = A.siAtmosphere (alt /~ meter)
 
 
 atmosphere' :: (Floating a, Ord a) => Length a -> Atmos a

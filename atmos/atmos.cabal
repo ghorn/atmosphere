@@ -20,7 +20,6 @@ library
    hs-source-dirs:      src
    exposed-modules:     Atmosphere
    other-modules:       Atmosphere.Constants
-                        Atmosphere.Math
 
    build-depends:       base >= 4 && < 5
 

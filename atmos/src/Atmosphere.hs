@@ -83,6 +83,31 @@ usAtmosphere alt_ft =
     viscosity=(1.0/_PSF2NSM)*metricViscosity theta
     kinematicViscosity = viscosity/density
 
+{- |
+   Compute altitude at which the standard atmosphere has a certain pressure.
+
+   Input: Pressure, N/m^2
+
+   Output: Altitude in meters
+-}
+siAltitudeFromPressure :: (Floating a, Ord a) => a -> a
+siAltitudeFromPressure pressureIn = 1000*alt
+  where
+    alt = _REARTH / (_REARTH/h - 1)
+    deltaIn = pressureIn / _PZERO
+
+    (htabI, tbase, ptabI, tgradI) = getI htpgTable
+      where
+        getI [htab'] = htab'
+        getI (htab0:htab1@(_,_,delta',_):htabs)
+          | deltaIn < delta'    = getI (htab1:htabs)
+          | otherwise = htab0
+        getI [] = error "something went wrong"
+
+    h
+      | 0.0 == tgradI = htabI - tbase / _GMR * (log (deltaIn / ptabI))
+      | otherwise     = htabI + tbase/tgradI*((deltaIn/ptabI)**(-tgradI/_GMR) - 1)
+
 metricViscosity :: (Floating a, Ord a) => a -> a
 metricViscosity theta = _BETAVISC*sqrt(t*t*t)/(t+_SUTH)
   where
@@ -123,13 +148,3 @@ atmosphere alt = (sigma, delta, theta)
       | 0.0 == tgradI = ptabI*exp(-_GMR*deltah/tbase)
       | otherwise     = ptabI*(tbase/tlocal)**(_GMR/tgradI)
     sigma = delta/theta
-
-{- |
-   Compute altitude at which the standard atmosphere has a certain pressure.
-
-   Input: Pressure, N/m^2
-
-   Output: Altitude in meters
--}
-siAltitudeFromPressure :: (Floating a, Ord a) => a -> a
-siAltitudeFromPressure pressure = bisection 1e-3 ((subtract pressure) . atmosPressure . siAtmosphere) (-1e4) (1e5)

@@ -20,9 +20,9 @@ main =
   , assertBool' "siAltitudeFromPressure = SI table"
     (checkSITableInversePressure < (5e-3:: Double)) -- 5 m absolute
   , assertBool' "siAltitudeFromPressure is inverse"
-    (checkSIInversePressure < (1e-3:: Double))
+    (checkSIInversePressure < (1e-9:: Double))
   , assertBool' "siAltitudeFromPressure is inverse (other direction)"
-    (checkSIInversePressure' < (1e-2:: Double))
+    (checkSIInversePressure' < (1e-9:: Double))
   ]
 
 assertBool' :: String -> Bool -> Test
@@ -36,7 +36,7 @@ checkSITableInversePressure = maximum $ map siTabErr siTable
         alt' = (siAltitudeFromPressure press) / 1000
 
 checkSIInversePressure :: (Floating a, Ord a, Enum a) => a
-checkSIInversePressure = maximum $ map oneError [-2000,-1950..90000]
+checkSIInversePressure = maximum $ map oneError [-5000,-4990..150000]
   where
     oneError alt = alt - alt'
       where
@@ -44,7 +44,7 @@ checkSIInversePressure = maximum $ map oneError [-2000,-1950..90000]
         alt' = siAltitudeFromPressure p
 
 checkSIInversePressure' :: (Floating a, Ord a, Enum a) => a
-checkSIInversePressure' = maximum $ map oneError [0.183,10..127782]
+checkSIInversePressure' = maximum $ map oneError [0.05,0.2..150000]
   where
     oneError p = p - p'
       where

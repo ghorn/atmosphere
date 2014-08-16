@@ -1,4 +1,8 @@
 1976 US Standard Atmosphere
+===
+
+[![Build Status](https://secure.travis-ci.org/ghorn/atmosphere.png?branch=master)](http://travis-ci.org/ghorn/atmosphere)
+
 Adapted by Greg Horn from original programs by Ralph L. Carmichael, Public Domain Aeronautical Software
 The original code can be found at <http://www.pdas.com/atmos.html>
 

@@ -1,19 +1,20 @@
 {-# OPTIONS_GHC -Wall #-}
 
-module Atmosphere.Constants( _FT2METERS
-                           , _KELVIN2RANKINE
-                           , _PSF2NSM
-                           , _SCF2KCM
-                           , _TZERO
-                           , _PZERO
-                           , _RHOZERO
-                           , _AZERO
-                           , _BETAVISC
-                           , _SUTH
-                           , htpgTable
-                           ) where
+module Atmosphere.Constants
+       ( _FT2METERS
+       , _KELVIN2RANKINE
+       , _PSF2NSM
+       , _SCF2KCM
+       , _TZERO
+       , _PZERO
+       , _RHOZERO
+       , _AZERO
+       , _BETAVISC
+       , _SUTH
+       , htpgTable
+       ) where
 
-import Data.List(zip4)
+import Data.List( zip4 )
 
 _FT2METERS :: (Ord a, Floating a) => a
 _KELVIN2RANKINE :: (Ord a, Floating a) => a

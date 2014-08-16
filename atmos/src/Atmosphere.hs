@@ -23,7 +23,7 @@ data Atmos a = Atmos { atmosTemperature :: a
    atmosphere in SI units
 
    Input: altitude in meters
-   
+
    Output: (pressure, density, speed of sound, viscosity, kinematic viscosity)
 
    > pressure            - N/m^2
@@ -53,11 +53,11 @@ siAtmosphere alt_m =
 
 {- |
    atmosphere in imperial units
-   
+
    Input: altitude in ft
 
    Output: (pressure, density, speed of sound, viscosity, kinematic viscosity)
-   
+
    > pressure            - lb/ft^2
    > density             - slugs/ft^3
    > speed of sound      - ft/s
@@ -92,11 +92,11 @@ metricViscosity theta = _BETAVISC*sqrt(t*t*t)/(t+_SUTH)
    Compute temperature, density, and pressure in standard atmosphere.
 
    Correct to 86 km.  Only approximate thereafter.
-   
+
    Input: alt geometric altitude, km.
-   
+
    Output: (sigma, delta, theta)
-   
+
    > sigma - density/sea-level standard density
    > delta - pressure/sea-level standard pressure
    > theta - temperature/sea-level std. temperature
@@ -119,7 +119,7 @@ atmosphere alt = (sigma, delta, theta)
 
     deltah = h - htabI              -- height above local base
     tlocal = tbase + tgradI*deltah  -- local temperature
-    
+
     theta  =  tlocal/_TZERO    -- temperature ratio
 
     delta

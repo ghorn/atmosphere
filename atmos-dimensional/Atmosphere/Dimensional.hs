@@ -1,8 +1,9 @@
 {-# OPTIONS_GHC -Wall #-}
 
-module Atmosphere.Dimensional( Atmos(..)
-                             , atmosphere
-                             ) where
+module Atmosphere.Dimensional
+       ( Atmos(..)
+       , atmosphere
+       ) where
 
 import qualified Atmosphere as A
 

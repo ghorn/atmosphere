@@ -104,9 +104,6 @@ metricViscosity theta = _BETAVISC*sqrt(t*t*t)/(t+_SUTH)
 atmosphere :: (Floating a, Ord a) => a -> (a,a,a)
 atmosphere alt = (sigma, delta, theta)
   where
-    _REARTH = 6369.0             -- radius of the Earth (km)
-    _GMR = 34.163195
-
     h = alt*_REARTH/(alt+_REARTH) -- geometric to geopotential altitude
 
     (htabI, tbase, ptabI, tgradI) = getI htpgTable

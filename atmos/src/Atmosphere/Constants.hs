@@ -11,6 +11,8 @@ module Atmosphere.Constants
        , _AZERO
        , _BETAVISC
        , _SUTH
+       , _REARTH
+       , _GMR
        , htpgTable
        ) where
 
@@ -26,6 +28,8 @@ _RHOZERO :: (Ord a, Floating a) => a
 _AZERO :: (Ord a, Floating a) => a
 _BETAVISC :: (Ord a, Floating a) => a
 _SUTH :: (Ord a, Floating a) => a
+_REARTH :: (Ord a, Floating a) => a
+_GMR :: (Ord a, Floating a) => a
 
 -- | mult. ft. to get meters (exact)
 _FT2METERS = 0.3048
@@ -47,6 +51,10 @@ _AZERO   = 340.294
 _BETAVISC = 1.458E-6
 -- | Sutherland's constant, kelvins
 _SUTH    = 110.4
+-- | radius of the Earth, km
+_REARTH = 6369.0
+-- | gas constant
+_GMR = 34.163195
 
 -- | table of (height, temperature, pressure, temperature gradient) over altitude
 htpgTable :: (Floating a, Ord a) => [(a,a,a,a)]

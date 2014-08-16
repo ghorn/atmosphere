@@ -11,14 +11,45 @@ import Atmosphere
 main :: IO ()
 main =
   defaultMain
-  [ assertBool' "simple atmosphere == atmosphere:   " (simpleAtmosVsAtmos < (1e-14 :: Double))
-  , assertBool' "siAtmosphere = SI table:           " (checkSITable < (1e-2 :: Double))
-  , assertBool' "usAtmosphere = US table:           " (checkUSTable < (1e-2 :: Double))
-  , assertBool' "siAltitudeFromPressure = SI table: " (checkSITableInversePressure < (5e-3:: Double)) -- 5 m absolute
+  [ assertBool' "simple atmosphere == atmosphere"
+    (simpleAtmosVsAtmos < (1e-14 :: Double))
+  , assertBool' "siAtmosphere = SI table"
+    (checkSITable < (1e-2 :: Double))
+  , assertBool' "usAtmosphere = US table"
+    (checkUSTable < (1e-2 :: Double))
+  , assertBool' "siAltitudeFromPressure = SI table"
+    (checkSITableInversePressure < (5e-3:: Double)) -- 5 m absolute
+  , assertBool' "siAltitudeFromPressure is inverse"
+    (checkSIInversePressure < (1e-3:: Double))
+  , assertBool' "siAltitudeFromPressure is inverse (other direction)"
+    (checkSIInversePressure' < (1e-2:: Double))
   ]
 
 assertBool' :: String -> Bool -> Test
 assertBool' name bool = testCase name (assertBool name bool)
+
+checkSITableInversePressure :: (Floating a, Ord a) => a
+checkSITableInversePressure = maximum $ map siTabErr siTable
+  where
+    siTabErr (alt, _, _, _, _, press, _, _, _, _) = abs (alt - alt')
+      where
+        alt' = (siAltitudeFromPressure press) / 1000
+
+checkSIInversePressure :: (Floating a, Ord a, Enum a) => a
+checkSIInversePressure = maximum $ map oneError [-2000,-1950..90000]
+  where
+    oneError alt = alt - alt'
+      where
+        p = atmosPressure (siAtmosphere alt)
+        alt' = siAltitudeFromPressure p
+
+checkSIInversePressure' :: (Floating a, Ord a, Enum a) => a
+checkSIInversePressure' = maximum $ map oneError [0.183,10..127782]
+  where
+    oneError p = p - p'
+      where
+        p' = atmosPressure (siAtmosphere alt)
+        alt = siAltitudeFromPressure p
 
 simpleAtmosVsAtmos :: (Floating a, Ord a, Enum a) => a
 simpleAtmosVsAtmos = maximum [maxErr alt | alt <- [0,0.01..19.99]]
@@ -78,13 +109,6 @@ checkSITable = maximum $ map (maximum . map abs . siTabErr) siTable
                          , (1e-6*visc, visc')
                          , (kVisc, kVisc')
                          ]
-
-checkSITableInversePressure :: (Floating a, Ord a) => a
-checkSITableInversePressure = maximum $ map siTabErr siTable
-  where
-    siTabErr (alt, _, _, _, _, press, _, _, _, _) = abs (alt - alt')
-      where
-        alt' = (siAltitudeFromPressure press) / 1000
 
 checkUSTable :: (Floating a, Ord a) => a
 checkUSTable = maximum $ map (maximum . map abs . usTabErr) usTable

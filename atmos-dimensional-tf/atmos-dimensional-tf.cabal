@@ -21,8 +21,8 @@ library
    exposed-modules: Atmosphere.Dimensional.TF
   -- other-modules:       
    build-depends:   base >= 4 && < 5,
-                    atmos >= 0.1 && < 0.2,
-                    dimensional-tf >= 0.1.1 && < 0.2
+                    atmos >= 0.1,
+                    dimensional-tf >= 0.1.1
 
 source-repository head
   type:     git

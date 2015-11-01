@@ -17,5 +17,5 @@ The core functionality in all of this is you input altitude and receive
 You can do this in SI or Imperial units with Atmosphere, or you can
 use one of the dimensional versions to handle units for you.
 
-As of atmosphere-0.3.0.0, GHC 7.6 is not supported. If you need it,
-use atmosphere-0.2.0.0 which has no dependencies except for base.
+As of atmos-0.3.0.0, GHC 7.6 is not supported. If you need it,
+use atmos-0.2.0.0 which has no dependencies except for base.

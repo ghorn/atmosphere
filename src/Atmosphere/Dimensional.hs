@@ -1,6 +1,9 @@
 {-# OPTIONS_GHC -Wall #-}
 
-module Atmosphere.Dimensional.TF
+-- | This is a thin wrapper on top of the atmos package.
+-- It provides the exaxt same functions but uses units
+-- from the dimensional package.
+module Atmosphere.Dimensional
        ( Atmos(..)
        , atmosphere
        ) where
@@ -8,7 +11,7 @@ module Atmosphere.Dimensional.TF
 import qualified Atmosphere as A
 
 import qualified Prelude ()
-import Numeric.Units.Dimensional.TF.Prelude
+import Numeric.Units.Dimensional.Prelude
 
 data Atmos a = Atmos { atmosTemperature :: ThermodynamicTemperature a
                      , atmosPressure :: Pressure a

@@ -6,6 +6,7 @@
 module Atmosphere.DimensionalTF
        ( Atmos(..)
        , atmosphere
+       , altitudeFromPressure
        ) where
 
 import qualified Atmosphere as A
@@ -32,3 +33,9 @@ atmosphere alt = Atmos
                  }
   where
     A.Atmos temp pressure density asound viscosity kinematicViscosity = A.siAtmosphere (alt /~ meter)
+
+altitudeFromPressure :: (Floating a, Ord a) => Pressure a -> Length a
+altitudeFromPressure dimPressure = siAltitude *~ meter
+  where
+    siAltitude = A.siAltitudeFromPressure siPressure
+    siPressure = dimPressure /~ pascal

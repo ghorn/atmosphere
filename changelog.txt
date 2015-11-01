@@ -1,6 +1,7 @@
 0.3
 * Merge atmos-dimensional and atmos-dimensional-tf into the main package.
 * Add dimensional versions of the invese function.
+* Require dimensional >= 1.0.0.0.
 
 0.2
 * Add unit tests and inverse functionality.

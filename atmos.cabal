@@ -24,7 +24,7 @@ library
    other-modules:       Atmosphere.Constants
 
    build-depends:       base >= 4 && < 5
-                       , dimensional >= 0.12.2 && < 0.14
+                       , dimensional >= 1.0.0.0
                        , dimensional-tf >= 0.1.1
 
 

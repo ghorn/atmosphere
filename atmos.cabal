@@ -1,12 +1,13 @@
 name:                atmos
-version:             0.2.0.0
-synopsis:            1976 US Standard Atmosphere
+version:             0.3.0.0
+synopsis:            1976 US Standard Atmosphere Model
 description: {
-1976 US Standard Atmosphere
+1976 US Standard Atmosphere Model.
 .
-Adapted by Greg Horn from original programs by Ralph L. Carmichael, Public Domain Aeronautical Software
+Adapted by Greg Horn from original programs by Ralph L. Carmichael,
+Public Domain Aeronautical Software.
 .
-The original code can be found at <http://www.pdas.com/atmos.html>
+The original code can be found at <http://www.pdas.com/atmos.html>.
 }
 license:             PublicDomain
 author:              Greg Horn

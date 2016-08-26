@@ -1,5 +1,5 @@
 name:                atmos
-version:             0.3.0.0
+version:             0.4.0.0
 synopsis:            1976 US Standard Atmosphere Model
 description: {
 1976 US Standard Atmosphere Model.
@@ -21,12 +21,10 @@ library
    hs-source-dirs:      src
    exposed-modules:     Atmosphere
                         Atmosphere.Dimensional
-                        Atmosphere.DimensionalTF
    other-modules:       Atmosphere.Constants
 
    build-depends:       base >= 4 && < 5
                        , dimensional >= 1.0.0.0
-                       , dimensional-tf >= 0.1.1
 
 
 test-suite unit-tests

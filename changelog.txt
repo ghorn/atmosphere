@@ -1,3 +1,6 @@
+0.4
+* Remove support for dimensional-tf to simplify installation.
+
 0.3
 * Merge atmos-dimensional and atmos-dimensional-tf into the main package.
 * Add dimensional versions of the invese function.

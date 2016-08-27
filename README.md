@@ -10,7 +10,6 @@ There are three modules you will be interested in.
 
     Atmosphere               - port of the atmos code from pdas
     Atmosphere.Dimensional   - same thing with dimensional wrappers
-    Atmosphere.DimensionalTF - same thing with dimensional-tf wrappers
 
 The core functionality in all of this is you input altitude and receive
 (pressure, density, speed of sound, viscosity, kinematic viscosity).
@@ -19,3 +18,6 @@ use one of the dimensional versions to handle units for you.
 
 As of atmos-0.3.0.0, GHC 7.6 is not supported. If you need it,
 use atmos-0.2.0.0 which has no dependencies except for base.
+
+As of atmos-0.4.0.0, the deprecated dimensional-tf package is not supported. If you need it,
+use atmos-0.3.0.0.

@@ -10,13 +10,15 @@ module Atmosphere
 
 import Atmosphere.Constants
 
-data Atmos a = Atmos { atmosTemperature :: a
-                     , atmosPressure :: a
-                     , atmosDensity :: a
-                     , atmosSpeedOfSound :: a
-                     , atmosViscosity :: a
-                     , atmosKinematicViscosity :: a
-                     }
+data Atmos a
+  = Atmos
+    { atmosTemperature :: a
+    , atmosPressure :: a
+    , atmosDensity :: a
+    , atmosSpeedOfSound :: a
+    , atmosViscosity :: a
+    , atmosKinematicViscosity :: a
+    }
 
 {- |
    atmosphere in SI units
